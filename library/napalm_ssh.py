@@ -3,7 +3,7 @@ from napalm.base.exceptions import ConnectionException
 
 def napalm_ssh(driver,node_ip,cli_cmd,username,password):
     net_driver = get_network_driver(driver)
-    device = net_driver(node_ip, username, password, optional_args={'global_delay_factor': 2})
+    device = net_driver(node_ip, username, password, optional_args={'global_delay_factor': 2, 'secret': password})
     try:
         device.open()
         output = device.cli(cli_cmd)
