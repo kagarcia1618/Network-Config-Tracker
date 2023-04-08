@@ -8,11 +8,14 @@ from library.netbox_api import get_data
 from library.napalm_ssh import napalm_ssh
 
 def config_check(device_cfg,node):
+    '''
+    Function that performs config diff checking.
+    - Updates the NetBox device status to offline if no config was pulled
+    - Updates the NetBox device custom field data for 'Last Config Change' if diff is found
+    - Commits the new configuration to gitlab if diff is found
+    '''
     poll_timestamp=datetime.now().strftime("%Y-%h-%d %H%MH")
     if device_cfg:
-        if node.status == 'offline':
-            node.status = 'active'
-            node.save()
         print(f'[INFO] {node.name} polling successfull on {poll_timestamp}.')
         gitlab_cfg = get_config(node.name)
         if gitlab_cfg:
@@ -32,6 +35,9 @@ def config_check(device_cfg,node):
             node.save()
 
 def config_pull_nxapi(node):
+    '''
+    Function that calls nxapi_cli function to fetch the latest configuration and passes this data to config_check function
+    '''
     device_cfg = nxapi_cli(
         str(node.primary_ip4).split('/')[0],
         'show run | exc !Time',
@@ -41,6 +47,9 @@ def config_pull_nxapi(node):
     config_check(device_cfg,node)
 
 def config_pull_napalm(driver,command,node):
+    '''
+    Function that calls napalm_ssh function to fetch the latest configuration and passes this data to config_check function
+    '''
     device_cfg = napalm_ssh(
         driver,
         str(node.primary_ip4).split('/')[0],
@@ -56,6 +65,7 @@ if __name__ == '__main__':
     netdev_user = decrypt_message(extract('private/credentials.txt').split(',')[0].encode())
     netdev_pass = decrypt_message(extract('private/credentials.txt').split(',')[1].encode())
 
+    #Fetch devices details from NetBox via API request
     devices = get_data()
 
     nxos_devices = []
@@ -63,6 +73,7 @@ if __name__ == '__main__':
     iosxr_devices = []
     junos_devices = []
 
+    #Iterates the list of devices and grouped based on platform
     for i in devices:
         if type(i.primary_ip) != type(None) and str(i.status) == 'Active':
             if str(i.platform) == 'Cisco NXOS':
@@ -74,7 +85,7 @@ if __name__ == '__main__':
             elif str(i.platform) == 'Juniper JunOS':
                 junos_devices.append(i)
     
-    #Multithreading
+    #Performs multithreading operation to execute different functions and  platform groups at the same time
     executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
     futures_nxos = [executor.submit(
         config_pull_nxapi,
