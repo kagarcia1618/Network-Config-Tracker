@@ -1,6 +1,10 @@
 site_name: Network Config Tracker
+repo_name: kagarcia1618/Network-Config-Tracker
+repo_url: "https://github.com/kagarcia1618/Network-Config-Tracker"
 theme:
   name: material
+  icon:
+    repo: fontawesome/brands/github
   features:
     - navigation.tabs
     - navigation.sections
