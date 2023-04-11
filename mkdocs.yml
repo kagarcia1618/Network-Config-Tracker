@@ -6,7 +6,6 @@ theme:
   icon:
     repo: fontawesome/brands/github
   features:
-    - navigation.tabs
     - navigation.sections
     - toc.integrate
     - navigation.top
@@ -22,13 +21,13 @@ theme:
         icon: material/toggle-switch-off-outline 
         name: Switch to dark mode
       primary: indigo
-      accent: purple 
+      accent: indigo 
     - scheme: slate 
       toggle:
         icon: material/toggle-switch
         name: Switch to light mode    
       primary: indigo
-      accent: lime
+      accent: indigo
 
 extra:
   social:
@@ -55,6 +54,11 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 copyright: |
   &copy; 2023 <a href="https://github.com/kagarcia1618"  target="_blank" rel="noopener">Kenneth Acar Garcia</a>
