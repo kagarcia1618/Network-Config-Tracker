@@ -59,6 +59,8 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - attr_list
+  - md_in_html
 
 copyright: |
   &copy; 2023 <a href="https://github.com/kagarcia1618"  target="_blank" rel="noopener">Kenneth Acar Garcia</a>

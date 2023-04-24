@@ -2,6 +2,7 @@
 
 Sample logic flow for simulated environment with R1 and SW1 as managed network devices.
 
+![Sample Diagram](https://raw.githubusercontent.com/kagarcia1618/Network-Config-Tracker/main/docs/Logic_flow_diagram.png){ align=left }
 
 ``` mermaid
 sequenceDiagram
