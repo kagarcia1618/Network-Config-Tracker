@@ -1,5 +1,6 @@
 pynetbox==7.0.1
 python-gitlab==3.13.0
 cryptography==40.0.1
-napalm==4.0.0
+napalm==3.2.0
+netmiko==3.4.0
 mkdocs-material==9.1.6
