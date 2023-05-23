@@ -67,7 +67,6 @@ if __name__ == '__main__':
 
     #Fetch devices details from NetBox via API request
     devices = get_data()
-    devices = [ i for i in devices if str(i.tags) == '[dev-simulation]' ]
 
     nxos_devices = []
     ios_devices = []
