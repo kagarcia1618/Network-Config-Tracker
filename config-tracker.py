@@ -40,7 +40,7 @@ def config_pull_nxapi(node):
     '''
     device_cfg = nxapi_cli(
         str(node.primary_ip4).split('/')[0],
-        'show run | exc !Time',
+        'show run | exc !Time | begin !Command',
         'cli_show_ascii',
         netdev_user,
         netdev_pass)
