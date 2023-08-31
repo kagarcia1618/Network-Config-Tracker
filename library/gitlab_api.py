@@ -8,7 +8,7 @@ url=extract('private/webportals.txt').splitlines()[1].split('=')[1]
 token=decrypt_message(extract('private/credentials.txt').split(',')[3].encode())
 project_name=decrypt_message(extract('private/credentials.txt').split(',')[4].encode())
 
-gl = gitlab.Gitlab(url, private_token=token)
+gl = gitlab.Gitlab(url, private_token=token, ssl_verify=False)
 project = gl.projects.get(project_name)
 
 def get_config(hostname):
